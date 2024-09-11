@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 8082",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:single-spa:dashboard": "ng build dashboard --configuration production",
-    "serve:single-spa:dashboard": "ng s --project dashboard --disable-host-check --port 4200 --live-reload false"
+    "serve:single-spa:dashboard": "ng s --project dashboard --disable-host-check --port 8082 --live-reload false"
   },
   "private": true,
   "dependencies": {
