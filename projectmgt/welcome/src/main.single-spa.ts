@@ -1,6 +1,9 @@
 import { enableProdMode, NgZone } from '@angular/core';
 import { Router, NavigationStart, provideRouter } from '@angular/router';
-import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
+import {
+  singleSpaAngular,
+  getSingleSpaExtraProviders,
+} from 'single-spa-angular';
 import { environment } from './environments/environment';
 import { singleSpaPropsSubject } from './single-spa/single-spa-props';
 import { APP_BASE_HREF } from '@angular/common';
@@ -13,13 +16,13 @@ if (environment.production) {
 }
 
 const lifecycles = singleSpaAngular({
-  bootstrapFunction: singleSpaProps => {
+  bootstrapFunction: (singleSpaProps) => {
     singleSpaPropsSubject.next(singleSpaProps);
     const options = {
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
         getSingleSpaExtraProviders(),
-        provideRouter([{ path: '**', component: EmptyRouteComponent }])
+        provideRouter([{ path: '**', component: EmptyRouteComponent }]),
       ],
     };
 

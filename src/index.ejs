@@ -48,11 +48,13 @@
     {
       "imports": {
         "@projectmgt/root-config": "//localhost:9000/projectmgt-root-config.js",
-        "@projectmgt/navigation": "http://localhost:8080/main.js",
-        "@projectmgt/welcome": "http://localhost:8081/main.js",
-        "@projectmgt/dashboard": "http://localhost:8082/main.js",
-        "@projectmgt/sharedstate": "http://localhost:8083/projectmgt-sharedstate.js",
-        "@projectmgt/projects": "http://localhost:8084/projectmgt-projects.js"
+        "@projectmgt/navigation": "//localhost:8080/main.js",
+        "@projectmgt/dashboard": "//localhost:8082/main.js",
+        "@projectmgt/welcome": "//localhost:8081/main.js",
+        "@projectmgt/sharedstate": "//localhost:8083/main.js",
+        "@projectmgt/projects": "//localhost:8084/main.js",
+        "@projectmgt/team": "//localhost:8085/main.js",
+        "@projectmgt/tasks": "//localhost:8086/main.js"
       }
     }
   </script>
@@ -62,7 +64,7 @@
     If you need to support Angular applications, uncomment the script tag below to ensure only one instance of ZoneJS is loaded
     Learn more about why at https://single-spa.js.org/docs/ecosystem-angular/#zonejs
   -->
-  <script src="https://cdn.jsdelivr.net/npm/zone.js@0.11.3/dist/zone.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zone.js@0.14.10/bundles/zone.umd.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
   <% if (isLocal) { %>

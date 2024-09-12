@@ -16,10 +16,18 @@
   </route>
 
   -->
-
   <main>
+    <nav>
+      <application name="@projectmgt/navigation"></application>
+    </nav>
     <route default>
+      <application name="@projectmgt/welcome"></application>
+    </route>
+    <route path="dashboard">
       <application name="@projectmgt/dashboard"></application>
+    </route>
+    <route path="projects">
+      <application name="@projectmgt/projects"></application>
     </route>
   </main>
 </single-spa-router>
