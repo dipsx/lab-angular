@@ -1,1 +1,74 @@
-{{title}}
+<div class="container mt-4">
+  <div class="row">
+    <!-- Project Summary Card -->
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">Project Summary</div>
+        <div class="card-body">
+          <h5 class="card-title">Total Projects</h5>
+          <p class="card-text display-4">{{ projects.length }}</p>
+          <a href="/projects" class="btn btn-primary">View Projects</a>
+        </div>
+      </div>
+    </div>
+    <!-- Task Summary Card -->
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">Task Summary</div>
+        <div class="card-body">
+          <h5 class="card-title">Total Tasks</h5>
+          <p class="card-text display-4">{{ tasks.length }}</p>
+          <a href="/tasks" class="btn btn-primary">View Tasks</a>
+        </div>
+      </div>
+    </div>
+    <!-- Team Summary Card -->
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">Team Summary</div>
+        <div class="card-body">
+          <h5 class="card-title">Total Team Members</h5>
+          <p class="card-text display-4">{{ team.length }}</p>
+          <a href="/team" class="btn btn-primary">View Team</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activities Table -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">Recent Activities</div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Activity</th>
+                <th scope="col">Project</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Task "Design Mockups" completed by John Doe</td>
+                <td>Project Alpha</td>
+                <td>2023-09-20</td>
+              </tr>
+              <tr>
+                <td>New task "API Integration" assigned to Jane Smith</td>
+                <td>Project Beta</td>
+                <td>2023-09-19</td>
+              </tr>
+              <tr>
+                <td>Team meeting scheduled</td>
+                <td>All Projects</td>
+                <td>2023-09-18</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
