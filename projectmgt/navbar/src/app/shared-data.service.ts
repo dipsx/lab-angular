@@ -10,10 +10,10 @@ export class SharedDataService {
   ]);
   public projects$: Observable<any[]> = this.projectsSubject.asObservable();
 
-  private teamsSubject = new BehaviorSubject<any[]>([
+  private teamSubject = new BehaviorSubject<any[]>([
     { id: 1, name: 'John Doe' },
   ]);
-  public teams$: Observable<any[]> = this.teamsSubject.asObservable();
+  public team$: Observable<any[]> = this.teamSubject.asObservable();
 
   private tasksSubject = new BehaviorSubject<any[]>([
     { id: 1, name: 'Project 1' },
@@ -24,7 +24,7 @@ export class SharedDataService {
     if (!window.sharedData) {
       window.sharedData = {
         projectsSubject: this.projectsSubject,
-        teamsSubject: this.teamsSubject,
+        teamSubject: this.teamSubject,
         tasksSubject: this.tasksSubject,
       };
     }
@@ -34,8 +34,8 @@ export class SharedDataService {
     this.projectsSubject.next(projects);
   }
 
-  public setTeams(teams: any[]) {
-    this.teamsSubject.next(teams);
+  public setTeam(team: any[]) {
+    this.teamSubject.next(team);
   }
 
   public setTasks(tasks: any[]) {

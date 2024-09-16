@@ -14,8 +14,8 @@ export class SharedDataService {
   private projectsSubject = new BehaviorSubject<any[]>([]);
   public projects$: Observable<any[]> = this.projectsSubject.asObservable();
 
-  private teamsSubject = new BehaviorSubject<any[]>([]);
-  public teams$: Observable<any[]> = this.teamsSubject.asObservable();
+  private teamSubject = new BehaviorSubject<any[]>([]);
+  public team$: Observable<any[]> = this.teamSubject.asObservable();
 
   private tasksSubject = new BehaviorSubject<any[]>([]);
   public tasks$: Observable<any[]> = this.tasksSubject.asObservable();
@@ -26,8 +26,8 @@ export class SharedDataService {
         window.sharedData.projectsSubject.subscribe((data) => {
           this.projectsSubject.next(data);
         });
-        window.sharedData.teamsSubject.subscribe((data) =>
-          this.teamsSubject.next(data)
+        window.sharedData.teamSubject.subscribe((data) =>
+          this.teamSubject.next(data)
         );
         window.sharedData.tasksSubject.subscribe((data) =>
           this.tasksSubject.next(data)

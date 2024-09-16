@@ -4,7 +4,7 @@ declare global {
   interface Window {
     sharedData: {
       projectsSubject: Subject<any[]>;
-      teamsSubject: Subject<any[]>;
+      teamSubject: Subject<any[]>;
       tasksSubject: Subject<any[]>;
     };
   }

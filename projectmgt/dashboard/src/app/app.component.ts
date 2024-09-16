@@ -21,5 +21,7 @@ export class AppComponent {
     this.sharedDataService.projects$.subscribe(
       (projects) => (this.projects = projects)
     );
+    this.sharedDataService.tasks$.subscribe((tasks) => (this.tasks = tasks));
+    this.sharedDataService.team$.subscribe((team) => (this.team = team));
   }
 }
