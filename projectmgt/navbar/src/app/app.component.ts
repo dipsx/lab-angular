@@ -17,15 +17,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('Navigation component initialized');
 
-    // every 100ms get value from shared state service
-    // and update the project count
-
-    setInterval(() => {
-      this.projectCount = this.sharedDataService.data.projects.length;
-    }, 1000);
-
-    // this.sharedStateService.projects$.subscribe((projects) => {
-    //   this.projectCount = projects.length;
-    // });
+    this.sharedDataService.projects$.subscribe(
+      (projects) => (this.projectCount = projects.length)
+    );
   }
 }

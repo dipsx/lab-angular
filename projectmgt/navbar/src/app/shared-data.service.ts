@@ -1,44 +1,44 @@
-// custom-event.service.ts
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SharedDataService implements OnDestroy {
-  private eventName = 'shared-data-event';
+export class SharedDataService {
+  private projectsSubject = new BehaviorSubject<any[]>([
+    { id: 1, name: 'Task 1' },
+  ]);
+  public projects$: Observable<any[]> = this.projectsSubject.asObservable();
 
-  public data: any = { projects: [], tasks: [], team: [] };
+  private teamsSubject = new BehaviorSubject<any[]>([
+    { id: 1, name: 'John Doe' },
+  ]);
+  public teams$: Observable<any[]> = this.teamsSubject.asObservable();
+
+  private tasksSubject = new BehaviorSubject<any[]>([
+    { id: 1, name: 'Project 1' },
+  ]);
+  public tasks$: Observable<any[]> = this.tasksSubject.asObservable();
 
   constructor() {
-    this.dispatchEvent({ projects: [1, 2, 3], tasks: [], team: [] });
-
-    window.addEventListener(this.eventName, (event: Event) =>
-      this.handleEvent(event as CustomEvent)
-    );
-
-    const existingData = (window as any).sharedData;
-    if (existingData !== undefined) {
-      this.data = existingData;
-      console.log('Data from sharedData:', this.data);
+    if (!window.sharedData) {
+      window.sharedData = {
+        projectsSubject: this.projectsSubject,
+        teamsSubject: this.teamsSubject,
+        tasksSubject: this.tasksSubject,
+      };
     }
   }
 
-  public dispatchEvent(data: any): void {
-    const event = new CustomEvent(this.eventName, { detail: data });
-    window.dispatchEvent(event);
-    (window as any).sharedData = data;
+  public setProjects(projects: any[]) {
+    this.projectsSubject.next(projects);
   }
 
-  private handleEvent = (event: CustomEvent) => {
-    const receivedData = event.detail;
-    console.log('Received data:', receivedData);
-    this.data = receivedData;
-  };
+  public setTeams(teams: any[]) {
+    this.teamsSubject.next(teams);
+  }
 
-  ngOnDestroy(): void {
-    window.removeEventListener(
-      this.eventName,
-      this.handleEvent as EventListener
-    );
+  public setTasks(tasks: any[]) {
+    this.tasksSubject.next(tasks);
   }
 }

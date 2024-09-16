@@ -17,10 +17,9 @@ export class AppComponent {
   constructor(private sharedDataService: SharedDataService) {}
 
   ngOnInit() {
-    this.projects = [{ id: 1, name: 'Project Alpha' }];
-    this.tasks = [{ id: 1, name: 'Task 1' }];
-    this.team = [{ id: 1, name: 'John Doe' }];
-
-    // this.sharedDataService.dispatchEvent({ projects: this.projects, tasks: this.tasks, team: this.team });
+    console.log('Dashboard component initialized');
+    this.sharedDataService.projects$.subscribe(
+      (projects) => (this.projects = projects)
+    );
   }
 }

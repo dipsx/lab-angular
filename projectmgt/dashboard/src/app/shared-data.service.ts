@@ -1,31 +1,56 @@
-// custom-event.service.ts
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  Observable,
+  skip,
+  Subject,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SharedDataService implements OnDestroy {
-  private eventName = 'shared-data-event';
+export class SharedDataService {
+  private projectsSubject = new BehaviorSubject<any[]>([]);
+  public projects$: Observable<any[]> = this.projectsSubject.asObservable();
+
+  private teamsSubject = new BehaviorSubject<any[]>([]);
+  public teams$: Observable<any[]> = this.teamsSubject.asObservable();
+
+  private tasksSubject = new BehaviorSubject<any[]>([]);
+  public tasks$: Observable<any[]> = this.tasksSubject.asObservable();
 
   constructor() {
-    window.addEventListener(this.eventName, (event: Event) =>
-      this.handleEvent(event as CustomEvent)
-    );
+    this.waitForSharedData()
+      .then(() => {
+        window.sharedData.projectsSubject.subscribe((data) => {
+          this.projectsSubject.next(data);
+        });
+        window.sharedData.teamsSubject.subscribe((data) =>
+          this.teamsSubject.next(data)
+        );
+        window.sharedData.tasksSubject.subscribe((data) =>
+          this.tasksSubject.next(data)
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
-  public dispatchEvent(data: any): void {
-    const event = new CustomEvent(this.eventName, { detail: data });
-    window.dispatchEvent(event);
-  }
+  private waitForSharedData(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const interval = setInterval(() => {
+        if (window.sharedData) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, 100);
 
-  private handleEvent = (event: CustomEvent) => {
-    const receivedData = event.detail;
-  };
-
-  ngOnDestroy(): void {
-    window.removeEventListener(
-      this.eventName,
-      this.handleEvent as EventListener
-    );
+      setTimeout(() => {
+        clearInterval(interval);
+        reject(new Error('sharedData not found within timeout'));
+      }, 5000);
+    });
   }
 }
