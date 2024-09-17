@@ -1,31 +1,44 @@
-import { enableProdMode, NgZone } from '@angular/core';
+import {
+  ApplicationConfig,
+  enableProdMode,
+  NgZone,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { Router, NavigationStart, provideRouter } from '@angular/router';
-import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
+import {
+  singleSpaAngular,
+  getSingleSpaExtraProviders,
+} from 'single-spa-angular';
 import { environment } from './environments/environment';
 import { singleSpaPropsSubject } from './single-spa/single-spa-props';
 import { APP_BASE_HREF } from '@angular/common';
-import { EmptyRouteComponent } from './app/empty-route/empty-route.component';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
 
 if (environment.production) {
   enableProdMode();
 }
 
 const lifecycles = singleSpaAngular({
-  bootstrapFunction: singleSpaProps => {
+  bootstrapFunction: (singleSpaProps) => {
     singleSpaPropsSubject.next(singleSpaProps);
-    const options = {
+
+    const appConfig: ApplicationConfig = {
       providers: [
-        { provide: APP_BASE_HREF, useValue: '/' },
+        { provide: APP_BASE_HREF, useValue: '/dashboard' },
         getSingleSpaExtraProviders(),
-        provideRouter([{ path: '**', component: EmptyRouteComponent }])
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(routes),
       ],
     };
 
-    return bootstrapApplication(AppComponent, options);
+    const bootstrapApp = bootstrapApplication(AppComponent, appConfig);
+    bootstrapApp.catch((err) => console.error(err));
+
+    return bootstrapApp;
   },
-  template: '<app-dashboard />',
+  template: '<app-dashboard-root>',
   Router,
   NavigationStart,
   NgZone,
