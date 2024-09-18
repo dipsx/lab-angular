@@ -15,17 +15,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   teams: any[] = [];
   private subscription: Subscription | undefined;
 
-  constructor(private sharedStateService: SharedStateService) { }
+  constructor(private sharedStateService: SharedStateService) {}
 
   ngOnInit() {
     // Subscribe to the shared state
-    this.subscription = this.sharedStateService.getStateObservable().subscribe((state) => {
-      if (state && state.dashboard) {
-        this.projects = state.dashboard.projects;
-        this.tasks = state.dashboard.tasks;
-        this.teams = state.dashboard.teams;
-      }
-    });
+    this.subscription = this.sharedStateService
+      .getStateObservable()
+      .subscribe((state) => {
+        if (state && state.dashboard) {
+          this.projects = state.dashboard.projects;
+          this.tasks = state.dashboard.tasks;
+          this.teams = state.dashboard.teams;
+        }
+      });
   }
 
   ngOnDestroy() {

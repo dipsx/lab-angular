@@ -1,8 +1,4 @@
-import {
-  ApplicationConfig,
-  enableProdMode,
-  NgZone,
-} from '@angular/core';
+import { ApplicationConfig, enableProdMode, NgZone } from '@angular/core';
 import { Router, NavigationStart, provideRouter } from '@angular/router';
 import {
   singleSpaAngular,

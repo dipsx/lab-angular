@@ -3,8 +3,18 @@ import { BehaviorSubject } from 'rxjs';
 
 // Mock data
 const projects = [
-  { id: 1, name: 'Project Alpha', description: 'Description of Project Alpha', date: '2023-01-01' },
-  { id: 2, name: 'Project Beta', description: 'Description of Project Beta', date: '2023-02-01' },
+  {
+    id: 1,
+    name: 'Project Alpha',
+    description: 'Description of Project Alpha',
+    date: '2023-01-01',
+  },
+  {
+    id: 2,
+    name: 'Project Beta',
+    description: 'Description of Project Beta',
+    date: '2023-02-01',
+  },
 ];
 
 const tasks = [
@@ -23,11 +33,11 @@ const dashboardState = {
   totalTeamMembers: teams.length,
   projects: projects,
   tasks: tasks,
-  teams: teams
+  teams: teams,
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SharedStateService {
   private stateSubject: BehaviorSubject<any>;
@@ -35,11 +45,16 @@ export class SharedStateService {
 
   constructor() {
     if (!this.window.sharedState$) {
-      this.stateSubject = new BehaviorSubject<any>({ dashboard: dashboardState });
+      this.stateSubject = new BehaviorSubject<any>({
+        dashboard: dashboardState,
+      });
       this.window.sharedState$ = this.stateSubject;
     } else {
       this.stateSubject = this.window.sharedState$;
-      this.stateSubject.next({ ...this.stateSubject.value, dashboard: dashboardState });
+      this.stateSubject.next({
+        ...this.stateSubject.value,
+        dashboard: dashboardState,
+      });
     }
   }
 
@@ -54,5 +69,4 @@ export class SharedStateService {
   setState(key: string, value: any) {
     this.stateSubject.next({ ...this.stateSubject.value, [key]: value });
   }
-
 }

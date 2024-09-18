@@ -12,7 +12,7 @@ import { SharedStateService } from './shared-state.service';
 export class AppComponent implements OnInit {
   projectCount: number = 0;
 
-  constructor(private sharedStateService: SharedStateService) { }
+  constructor(private sharedStateService: SharedStateService) {}
 
   ngOnInit(): void {
     console.log('Navigation component initialized');
