@@ -2,7 +2,6 @@ import {
   ApplicationConfig,
   enableProdMode,
   NgZone,
-  provideZoneChangeDetection,
 } from '@angular/core';
 import { Router, NavigationStart, provideRouter } from '@angular/router';
 import {
@@ -28,15 +27,11 @@ const lifecycles = singleSpaAngular({
       providers: [
         { provide: APP_BASE_HREF, useValue: '/dashboard' },
         getSingleSpaExtraProviders(),
-        provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(routes),
       ],
     };
 
-    const bootstrapApp = bootstrapApplication(AppComponent, appConfig);
-    bootstrapApp.catch((err) => console.error(err));
-
-    return bootstrapApp;
+    return bootstrapApplication(AppComponent, appConfig);
   },
   template: '<app-dashboard-root>',
   Router,

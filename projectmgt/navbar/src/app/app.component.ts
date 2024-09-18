@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SharedDataService } from './shared-data.service';
+import { SharedStateService } from './shared-state.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,13 +12,14 @@ import { SharedDataService } from './shared-data.service';
 export class AppComponent implements OnInit {
   projectCount: number = 0;
 
-  constructor(private sharedDataService: SharedDataService) {}
+  constructor(private sharedStateService: SharedStateService) { }
 
   ngOnInit(): void {
     console.log('Navigation component initialized');
-
-    this.sharedDataService.projects$.subscribe(
-      (projects) => (this.projectCount = projects.length)
-    );
+    this.sharedStateService.getStateObservable().subscribe((data) => {
+      if (data.dashboard) {
+        this.projectCount = data.dashboard.projects.length;
+      }
+    });
   }
 }
