@@ -11,6 +11,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { EmptyRouteComponent } from './app/empty-route/empty-route.component';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
+import { sharedStateResource } from './services/shared-state.service';
 
 if (environment.production) {
   enableProdMode();
@@ -29,7 +30,7 @@ const lifecycles = singleSpaAngular({
 
     return bootstrapApplication(AppComponent, options);
   },
-  template: '<app-navbar />',
+  template: '<app-sharedstate />',
   Router,
   NavigationStart,
   NgZone,
@@ -38,3 +39,5 @@ const lifecycles = singleSpaAngular({
 export const bootstrap = lifecycles.bootstrap;
 export const mount = lifecycles.mount;
 export const unmount = lifecycles.unmount;
+
+export const sharedStateService = sharedStateResource();

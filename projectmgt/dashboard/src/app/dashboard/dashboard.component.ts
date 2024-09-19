@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SharedStateService } from '../shared-state.service';
-import { Subscription } from 'rxjs';
+import { sharedStateService } from '@projectmgt/sharedstate';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,31 +8,25 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
   projects: any[] = [];
   tasks: any[] = [];
   teams: any[] = [];
-  private subscription: Subscription | undefined;
 
-  constructor(private sharedStateService: SharedStateService) {}
+  constructor() {}
+
+  sharedState: any;
+  updateSharedState = (key: string, value: any) => {
+    sharedStateService.setState('dashboard', {
+      ...this.sharedState,
+      [key]: value,
+    });
+  };
 
   ngOnInit() {
-    // Subscribe to the shared state
-    this.subscription = this.sharedStateService
-      .getStateObservable()
-      .subscribe((state) => {
-        if (state && state.dashboard) {
-          this.projects = state.dashboard.projects;
-          this.tasks = state.dashboard.tasks;
-          this.teams = state.dashboard.teams;
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    // Unsubscribe to prevent memory leaks
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.sharedState = sharedStateService.getState('dashboard');
+    this.projects = this.sharedState.projects;
+    this.tasks = this.sharedState.tasks;
+    this.teams = this.sharedState.teams;
   }
 }
