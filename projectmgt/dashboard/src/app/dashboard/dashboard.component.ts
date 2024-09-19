@@ -13,34 +13,36 @@ export class DashboardComponent implements OnInit {
   projects: any[] = [];
   tasks: any[] = [];
   team: any[] = [];
+  error: any = null;
 
   constructor() {}
 
   ngOnInit() {
-    onEventInstance('updateData', (event: any) => {
-      console.log('Data updated', event.detail);
-      this.projects = event.detail.projects;
-      this.tasks = event.detail.tasks;
-      this.team = event.detail.team;
-    });
+    apiServiceInstance
+      .getProjects()
+      .then((data: any) => {
+        this.projects = data;
+      })
+      .catch((error: any) => {
+        this.error = 'Failed to load projects.';
+      });
 
-    apiServiceInstance.getProjects().then((data: any) => {
-      this.projects = data;
-    });
-    apiServiceInstance.getTasks().then((data: any) => {
-      this.tasks = data;
-    });
-    apiServiceInstance.getTeam().then((data: any) => {
-      this.team = data;
-    });
+    apiServiceInstance
+      .getTasks()
+      .then((data: any) => {
+        this.tasks = data;
+      })
+      .catch((error: any) => {
+        this.error = 'Failed to load tasks.';
+      });
+
+    apiServiceInstance
+      .getTeam()
+      .then((data: any) => {
+        this.team = data;
+      })
+      .catch((error: any) => {
+        this.error = 'Failed to load team.';
+      });
   }
-
-  updateData = () => {
-    const data = {
-      projects: this.projects,
-      tasks: this.tasks,
-      team: this.team,
-    };
-    emitEventInstance('updateData', data);
-  };
 }
