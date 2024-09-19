@@ -13,6 +13,12 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { sharedStateResource } from './services/shared-state.service';
 import { apiService } from './services/api.service';
+import {
+  eventBus,
+  emitEvent,
+  onEvent,
+  removeEvent,
+} from './services/event-bus';
 
 if (environment.production) {
   enableProdMode();
@@ -43,3 +49,8 @@ export const unmount = lifecycles.unmount;
 
 export const sharedStateService = sharedStateResource();
 export const apiServiceInstance = apiService();
+
+export const eventBusInstance = eventBus;
+export const emitEventInstance = emitEvent;
+export const onEventInstance = onEvent;
+export const removeEventInstance = removeEvent;
