@@ -12,6 +12,7 @@ import { EmptyRouteComponent } from './app/empty-route/empty-route.component';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { sharedStateResource } from './services/shared-state.service';
+import { apiService } from './services/api.service';
 
 if (environment.production) {
   enableProdMode();
@@ -41,3 +42,4 @@ export const mount = lifecycles.mount;
 export const unmount = lifecycles.unmount;
 
 export const sharedStateService = sharedStateResource();
+export const apiServiceInstance = apiService();

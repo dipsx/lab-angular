@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SharedStateService } from './shared-state.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { sharedStateService } from '@projectmgt/sharedstate';
 
 @Component({
   selector: 'app-projects',
@@ -11,37 +10,35 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   projects: any[] = [];
   newProject: any = {};
+  sharedState: any;
 
-  private subscription: Subscription | undefined;
-
-  constructor(private sharedStateService: SharedStateService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.subscription = this.sharedStateService
-      .getStateObservable()
-      .subscribe((state) => {
-        if (state?.projects) {
-          this.projects = state.projects;
-        }
-      });
+    this.sharedState = sharedStateService.getState('projects') || {
+      projects: [],
+    };
+    this.projects = this.sharedState.projects;
+    this.newProject = {};
   }
 
   addProject() {
     if (this.newProject.name && this.newProject.description) {
       this.projects.push(this.newProject);
-      this.sharedStateService.setState('projects', this.projects);
+      this.updateSharedState('projects', this.projects);
       this.newProject = {}; // Reset form
     } else {
       console.log('Form is invalid');
     }
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+  updateSharedState = (key: string, value: any) => {
+    sharedStateService.setState('projects', {
+      ...this.sharedState,
+      [key]: value,
+    });
+  };
 }
