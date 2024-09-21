@@ -6,7 +6,10 @@
     "outDir": "./out-tsc/spec",
     "types": [
       "jasmine"
-    ]
+    ],
+    "paths": {
+      "@projectmgt/sharedstate": ["./mocks/sharedstate.mock.ts"]
+    }
   },
   "include": [
     "src/**/*.spec.ts",
