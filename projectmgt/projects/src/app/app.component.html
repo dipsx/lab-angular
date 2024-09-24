@@ -13,10 +13,7 @@
       />
       <div
         class="invalid-feedback"
-        *ngIf="
-          projectForm.submitted &&
-          projectForm.form.controls['projectName']?.invalid
-        "
+        *ngIf="projectForm.submitted && projectForm.form.controls['projectName']?.invalid"
       >
         Project name is required.
       </div>
@@ -32,10 +29,7 @@
       ></textarea>
       <div
         class="invalid-feedback"
-        *ngIf="
-          projectForm.submitted &&
-          projectForm.form.controls['projectDescription']?.invalid
-        "
+        *ngIf="projectForm.submitted && projectForm.form.controls['projectDescription']?.invalid"
       >
         Project description is required.
       </div>
@@ -53,8 +47,7 @@
   <h3 class="mt-4">Project List</h3>
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let project of projects">
-      <strong>{{ project.name }}</strong
-      >: {{ project.description }}
+      <strong>{{ project.name }}</strong>: {{ project.description }}
     </li>
   </ul>
 </div>
